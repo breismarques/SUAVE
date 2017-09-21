@@ -56,6 +56,7 @@ class Internal_Combustion_Engine(Energy_Component):
 
 
         altitude_virtual = altitude - h_flat # shift in power lapse due to flat rate
+        altitude_virtual[altitude_virtual<0.] = 0.
         atmo = SUAVE.Analyses.Atmospheric.US_Standard_1976()
         atmo_values = atmo.compute_values(altitude_virtual,delta_isa)
         p   = atmo_values.pressure

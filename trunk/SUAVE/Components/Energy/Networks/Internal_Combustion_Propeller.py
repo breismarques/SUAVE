@@ -29,6 +29,14 @@ class Internal_Combustion_Propeller(Propulsor):
         self.thrust_angle      = 0.0
         self.rated_speed       = 0.0
         self.tag               = 'network'
+        self.nacelle_diameter = None
+        
+        #areas needed for drag; not in there yet
+        self.areas             = Data()
+        self.areas.wetted      = 0.0
+        self.areas.maximum     = 0.0
+        self.areas.exit        = 0.0
+        self.areas.inflow      = 0.0
     
     # manage process with a driver function
     def evaluate_thrust(self,state):

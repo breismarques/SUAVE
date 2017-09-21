@@ -10,9 +10,11 @@ from Expansion_Nozzle import Expansion_Nozzle
 from Fan import Fan
 from Fuel_Cell import Fuel_Cell
 from Motor import Motor
+from Internal_Combustion_Engine import Internal_Combustion_Engine
 from Motor_Lo_Fid import Motor_Lo_Fid
 from Propeller import Propeller
 from Propeller_Lo_Fid import Propeller_Lo_Fid
+from Propeller_variable_pitch import Propeller_variable_pitch
 from Ram import Ram
 from Solar_Panel import Solar_Panel
 from Turbine import Turbine
