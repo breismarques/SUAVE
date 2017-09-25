@@ -13,3 +13,4 @@ from Solar_Low_Fidelity import Solar_Low_Fidelity
 from Dual_Battery_Ducted_Fan import Dual_Battery_Ducted_Fan
 from Propulsor_Surrogate import Propulsor_Surrogate
 from Internal_Combustion_Propeller import Internal_Combustion_Propeller
+from Internal_Combustion_Propeller_Pitch import Internal_Combustion_Propeller_Pitch
