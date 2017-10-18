@@ -84,6 +84,7 @@ def print_parasite_drag(ref_condition,vehicle,analyses,filename = 'parasite_drag
     altitude = fsolve( func  = solve_altitude  ,
                         x0   = 0.              ,
                         args = alt_conditions           )
+    
 
     # compute atmosphere
     atmosphere = SUAVE.Analyses.Atmospheric.US_Standard_1976()

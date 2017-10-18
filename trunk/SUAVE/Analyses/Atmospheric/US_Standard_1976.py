@@ -118,6 +118,7 @@ class US_Standard_1976(Atmospheric):
         
         # convert geometric to geopotential altitude
         zs = zs/(1 + zs/Rad)
+
         
         # check ranges
         if np.amin(zs) < zmin:

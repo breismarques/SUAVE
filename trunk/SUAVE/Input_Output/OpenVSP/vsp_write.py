@@ -13,7 +13,10 @@ import SUAVE
 from SUAVE.Core import Units, Data
 
 try:
+    import sys
+    sys.path.insert(0, '/Users/Bruno/OpenVSP/build/python_api')
     import vsp_g as vsp
+
 except ImportError:
     # This allows SUAVE to build without OpenVSP
     pass
@@ -439,17 +442,27 @@ def write(vehicle,tag):
             fuselage.OpenVSP_ID = fuse_id
             
             # Nose
-            vsp.SetParmVal(fuse_id,"TopLAngle","XSec_0",vals.nose.top.angle)
-            vsp.SetParmVal(fuse_id,"TopLStrength","XSec_0",vals.nose.top.strength)
-            vsp.SetParmVal(fuse_id,"RightLAngle","XSec_0",vals.nose.side.angle)
-            vsp.SetParmVal(fuse_id,"RightLStrength","XSec_0",vals.nose.side.strength)
-            vsp.SetParmVal(fuse_id,"TBSym","XSec_0",vals.nose.TB_Sym)
-            vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_0",vals.nose.z_pos)
+            #vsp.SetParmVal(fuse_id,"TopLAngle","XSec_0",vals.nose.top.angle)
+            #vsp.SetParmVal(fuse_id,"TopLStrength","XSec_0",vals.nose.top.strength)
+            #vsp.SetParmVal(fuse_id,"RightLAngle","XSec_0",vals.nose.side.angle)
+            #vsp.SetParmVal(fuse_id,"RightLStrength","XSec_0",vals.nose.side.strength)
+            #vsp.SetParmVal(fuse_id,"TBSym","XSec_0",vals.nose.TB_Sym)
+            #vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_0",vals.nose.z_pos)
+            
+            #MidFuselage1
+            vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_1",vals.midfus1.z_pos)
+            
+            #MidFuselage2
+            vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_2",vals.midfus2.z_pos)
+            
+            #MidFuselage3
+            vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_3",vals.midfus3.z_pos)
             
             
             # Tail
-            vsp.SetParmVal(fuse_id,"TopLAngle","XSec_4",vals.tail.top.angle)
-            vsp.SetParmVal(fuse_id,"TopLStrength","XSec_4",vals.tail.top.strength)
+            vsp.SetParmVal(fuse_id,"ZLocPercent","XSec_4",vals.tail.z_pos)
+            #vsp.SetParmVal(fuse_id,"TopLAngle","XSec_4",vals.tail.top.angle)
+            #vsp.SetParmVal(fuse_id,"TopLStrength","XSec_4",vals.tail.top.strength)
             # Below can be enabled if AllSym (below) is removed
             #vsp.SetParmVal(fuse_id,"RightLAngle","XSec_4",vals.tail.side.angle)
             #vsp.SetParmVal(fuse_id,"RightLStrength","XSec_4",vals.tail.side.strength)
@@ -474,7 +487,7 @@ def write(vehicle,tag):
         vsp.SetParmVal(fuse_id, "Ellipse_Width", "XSecCurve_3", width)
         vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_1", height1);
         vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_2", height2);
-        vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_3", height3);   
+        vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_3", height3);
     
     # Write the vehicle to the file
     

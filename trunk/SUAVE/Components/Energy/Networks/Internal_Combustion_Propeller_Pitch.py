@@ -50,7 +50,7 @@ class Internal_Combustion_Propeller_Pitch(Propulsor):
         
         # Throttle the engine
         eta = conditions.propulsion.throttle[:,0,None]
-        engine.speed = rated_speed * eta
+        engine.speed = conditions.propulsion.rpm
         #conditions.propulsion.combustion_engine_throttle = eta # keep this 'throttle' on
         conditions.propulsion.pitch_command = eta
         
@@ -65,19 +65,15 @@ class Internal_Combustion_Propeller_Pitch(Propulsor):
         propeller.inputs.omega =  engine.speed
         propeller.thrust_angle = self.thrust_angle
         # step 4
-        F, Q, P, Cp = propeller.spin(conditions)
-        
-        # Check to see if magic thrust is needed, the ESC caps throttle at 1.1 already
-        P[eta>1.0] = P[eta>1.0]*eta[eta>1.0]
-        F[eta>1.0] = F[eta>1.0]*eta[eta>1.0]   
+        F, Q, P, Cp = propeller.spin_variable_pitch(conditions)
         
         #print 'Delta Torque'
         #print Q - torque
     
         # Pack the conditions for outputs
-        rpm        = engine.speed / Units.rpm
+        #rpm        = engine.speed / Units.rpm
           
-        conditions.propulsion.rpm              = rpm
+        conditions.propulsion.rpm              = engine.speed
         conditions.propulsion.propeller_torque = Q
         conditions.propulsion.power            = P
         

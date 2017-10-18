@@ -34,6 +34,7 @@ class Propeller_variable_pitch(Energy_Component):
         self.prop_attributes.twist_distribution = 0.0
         self.prop_attributes.chord_distribution = 0.0
         self.prop_attributes.mid_chord_aligment = 0.0
+        self.prop_attributes.ducted             = False
         self.thrust_angle                       = 0.0
         
     def spin(self,conditions):

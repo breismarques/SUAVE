@@ -94,7 +94,7 @@ class Internal_Combustion_Engine(Energy_Component):
         torque = output_power/speed
         # store to outputs
         self.outputs.power                           = output_power
-        self.outputs.power_specific_fuel_consumption = BSFC
+        self.outputs.power_specific_fuel_consumption = BSFC * np.ones_like(output_power)
         self.outputs.fuel_flow_rate                  = fuel_flow_rate
         self.outputs.torque                          = torque
 
