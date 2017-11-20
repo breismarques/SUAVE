@@ -28,6 +28,7 @@ class Propeller_variable_pitch(Energy_Component):
     def __defaults__(self):
         
         self.prop_attributes = Data
+        #self.prop_attributes.tag = 'propeller_variable_pitch'
         self.prop_attributes.number_blades      = 0.0
         self.prop_attributes.tip_radius         = 0.0
         self.prop_attributes.hub_radius         = 0.0
@@ -36,6 +37,7 @@ class Propeller_variable_pitch(Energy_Component):
         self.prop_attributes.mid_chord_aligment = 0.0
         self.prop_attributes.ducted             = False
         self.thrust_angle                       = 0.0
+        self.position        = [0.0,0.0,0.0]
         
     def spin(self,conditions):
         """ Analyzes a propeller given geometry and operating conditions

@@ -488,9 +488,102 @@ def write(vehicle,tag):
         vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_1", height1);
         vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_2", height2);
         vsp.SetParmVal(fuse_id, "Ellipse_Height", "XSecCurve_3", height3);
+                      
+                      
+                      
+    # Create the disk
+    
+    if vehicle.propulsors.has_key('internal_combustion_propeller'):
+    
+    
+        # Unpack
+        network  = vehicle.propulsors.internal_combustion_propeller
+        n_engines = network.number_of_engines
+        length = network.engine_length
+        thrust_ang = network.thrust_angle
+        r_speed = network.rated_speed
+        nac_diameter = network.nacelle_diameter
+        
+        # Unpack propeller
+        prop = network.propeller.prop_attributes
+        prop_position=prop.position
+        t_radius=prop.tip_radius
+        h_radius=prop.hub_radius
+        i=1
+        
+        while i<=n_engines/2:
+        
+           disk_id = vsp.AddGeom("Disk")
+           vsp.SetGeomName(disk_id, 'propeller_'+str(i))
+           area_tags[network.tag] = ['disk',network.tag]
+    
+           vsp.SetParmVal(disk_id,"X_Rel_Location","XForm",prop_position[i-1][0])
+           vsp.SetParmVal(disk_id,"Y_Rel_Location","XForm",prop_position[i-1][1])
+           vsp.SetParmVal(disk_id,"Z_Rel_Location","XForm",prop_position[i-1][2])
+           vsp.SetParmVal(disk_id,"Diameter","Design",t_radius*2.0)
+           vsp.SetParmVal(vsp.GetParm(disk_id, "Sym_Planar_Flag", "Sym"), vsp.SYM_XZ)
+           
+           i=i+1
+           
+    ## VSPAERO
+    
+    wing_id=vsp.FindGeomsWithName("main_wing")
+    
+    
+    #Set VSPAERO Reference lengths & areas
+
+    wing_id=vsp.SetVSPAERORefWingID(wing_id[0]) 
+    
+    #Set VSPAERO Xcg position
+    
+    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+    xcg_id = vsp.FindParm(vspaero_settings_container_id, "Xcg", "VSPAERO" )
+    vsp.SetParmValUpdate( xcg_id, 2 )
+    
+    #Auto Group Control Surfaces
+    
+    vsp.AutoGroupVSPAEROControlSurfaces()
+    vsp.GetNumControlSurfaceGroups() == 3
+    vsp.Update()
+    
+    
+    control_group_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 ) #auto grouping produces parm containers within VSPAEROSettings
+    
+    #Set Control Surface Group Deflection Angle
+    
+    
+    
+    #Setup export filenames
+    
+    m_vspfname_for_vspaerotests = tag + ".vsp3"
+    vsp.SetVSP3FileName( m_vspfname_for_vspaerotests )  #this still needs to be done even if a call to WriteVSPFile is made
+    vsp.Update()
+    
+     
+    #Final vehicle update
+    
+    vsp.Update()
+    
+    
+    #Save Vehicle to File
+    
+    vsp.WriteVSPFile( vsp.GetVSPFileName(), vsp.SET_ALL )
+
+    
+    
+
+    
+  
+           
+
+
+
+        
+    
+    
     
     # Write the vehicle to the file
     
-    vsp.WriteVSPFile(tag + ".vsp3")
+    #vsp.WriteVSPFile(tag + ".vsp3")
     
     return area_tags
