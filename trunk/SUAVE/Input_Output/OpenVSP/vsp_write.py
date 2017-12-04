@@ -102,8 +102,11 @@ def write(vehicle,tag):
     # -------------
     # Wings
     # -------------
+
     
     for wing in vehicle.wings:
+        
+        
     
         wing_x = wing.origin[0]    
         wing_y = wing.origin[1]
@@ -132,6 +135,7 @@ def write(vehicle,tag):
         wing_id = vsp.AddGeom( "WING" )
         vsp.SetGeomName(wing_id, wing.tag)
         area_tags[wing.tag] = ['wings',wing.tag]
+        
             
         # Make names for each section and insert them into the wing if necessary
         x_secs       = []
@@ -142,6 +146,7 @@ def write(vehicle,tag):
         for i_segs in xrange(0,n_segments+2):
             x_secs.append('XSec_' + str(i_segs))
             x_sec_curves.append('XSecCurve_' + str(i_segs))
+            
 
         # Apply the basic characteristics of the wing to root and tip
         if wing.symmetric == False:
@@ -305,6 +310,8 @@ def write(vehicle,tag):
                 vsp.SetParmVal( wing_id,'Twist',x_secs[1],wing.Segments[i_segs-1].twist / Units.deg)
             
             vsp.Update()
+            
+                
        
         if (n_segments != 0) and (wing.Segments[-1].percent_span_location == 1.):
             tip_chord = root_chord*wing.Segments[-1].root_chord_percent
@@ -323,6 +330,7 @@ def write(vehicle,tag):
         
         if wing.tag == 'main_wing':
             main_wing_id = wing_id
+            
             
             
     ## Skeleton code for props and pylons can be found in previous commits (~Dec 2016) if desired
@@ -568,6 +576,8 @@ def write(vehicle,tag):
     #Save Vehicle to File
     
     vsp.WriteVSPFile( vsp.GetVSPFileName(), vsp.SET_ALL )
+    
+    
 
     
     

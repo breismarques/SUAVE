@@ -23,66 +23,62 @@ import numpy as np
 ## @ingroup Input_Output-OpenVSP
 def analysis(tag):
     
-    try:
-        vsp.ClearVSPModel()
-    except NameError:
-        print 'VSP import failed'
-        return -1
+    if 1==1:
+
+        try:
+            vsp.ClearVSPModel()
+        except NameError:
+            print 'VSP import failed'
+
+
+        #open the file created in vsp_write
     
-    #open the file created in vsp_write
+        vsp.ReadVSPFile(tag)
+        
     
-    vsp.ReadVSPFile(tag)
+        #==== Analysis: VSPAero Compute Geometry ====//
     
-    #==== Analysis: VSPAero Compute Geometry ====//
+        analysis_name="VSPAEROComputeGeometry"
     
-    analysis_name="VSPAEROComputeGeometry"
+        #Set defaults
     
-    #Set defaults
+        vsp.SetAnalysisInputDefaults(analysis_name)
     
-    vsp.SetAnalysisInputDefaults(analysis_name)
+        #Change some input values
+        #    Analysis method
     
-    #Change some input values
-    #    Analysis method
-    
-    analysis_method1 = vsp.GetIntAnalysisInput( analysis_name, "AnalysisMethod" )
+        analysis_method1 = vsp.GetIntAnalysisInput( analysis_name, "AnalysisMethod" )
 
     
-    analysis_method=list(analysis_method1)
+        analysis_method=list(analysis_method1)
     
-    analysis_method[0] = ( vsp.VORTEX_LATTICE )
+        analysis_method[0] = ( vsp.VORTEX_LATTICE )
     
     
-    vsp.SetIntAnalysisInput( analysis_name, "AnalysisMethod", analysis_method )
+        vsp.SetIntAnalysisInput( analysis_name, "AnalysisMethod", analysis_method )
     
-    #list inputs, type, and current values
     
-    vsp.PrintAnalysisInputs(analysis_name)
+        #list inputs, type, and current values
     
-    #Execute
+        vsp.PrintAnalysisInputs(analysis_name)
     
-    rid = vsp.ExecAnalysis( analysis_name );
+        #Execute
+    
+        rid = vsp.ExecAnalysis( analysis_name );
             
     
-    #Get & Display Results
+        #Get & Display Results
     
-    a=vsp.PrintResults(rid);
-                      
-    print a
+        vsp.PrintResults(rid);
     
-    
-    
-    
-    
-    
-    
-    
+        # Check for errors
+
+        errorMgr = vsp.ErrorMgrSingleton_getInstance()
+        num_err = errorMgr.GetNumTotalErrors()
+        for i in range(0, num_err):
+            err = errorMgr.PopLastError()
+            print("error = ", err.m_ErrorString)
     
     
     
-    
-    
-    
-    
-    
-    
-    return 0
+    return 
