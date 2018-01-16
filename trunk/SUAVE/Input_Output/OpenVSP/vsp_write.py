@@ -16,6 +16,7 @@ try:
     import sys
     sys.path.insert(0, '/Users/Bruno/OpenVSP/build/python_api')
     import vsp_g as vsp
+    import vsp as vsp1
 
 except ImportError:
     # This allows SUAVE to build without OpenVSP
@@ -88,16 +89,20 @@ def write(vehicle,tag):
 
     Properties Used:
     N/A
-    """    
+    """   
+    
     
     # Reset OpenVSP to avoid including a previous vehicle
     try:
+ 
         vsp.ClearVSPModel()
+        
     except NameError:
         print 'VSP import failed'
         return -1
     
     area_tags = dict() # for wetted area assignment
+               
     
     # -------------
     # Wings
@@ -528,34 +533,36 @@ def write(vehicle,tag):
            vsp.SetParmVal(disk_id,"X_Rel_Location","XForm",prop_position[i-1][0])
            vsp.SetParmVal(disk_id,"Y_Rel_Location","XForm",prop_position[i-1][1])
            vsp.SetParmVal(disk_id,"Z_Rel_Location","XForm",prop_position[i-1][2])
-           vsp.SetParmVal(disk_id,"Diameter","Design",t_radius*2.0)
+           vsp.SetParmVal(disk_id,'Diameter','Design',t_radius*2.0)
            vsp.SetParmVal(vsp.GetParm(disk_id, "Sym_Planar_Flag", "Sym"), vsp.SYM_XZ)
            
            i=i+1
            
     ## VSPAERO
     
-    wing_id=vsp.FindGeomsWithName("main_wing")
+    #wing_id=vsp.FindGeomsWithName("main_wing")
+    
     
     
     #Set VSPAERO Reference lengths & areas
 
-    wing_id=vsp.SetVSPAERORefWingID(wing_id[0]) 
+    #wing_id=vsp.SetVSPAERORefWingID(wing_id[0]) 
     
     #Set VSPAERO Xcg position
     
-    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
-    xcg_id = vsp.FindParm(vspaero_settings_container_id, "Xcg", "VSPAERO" )
-    vsp.SetParmValUpdate( xcg_id, 2 )
+    #vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+    #xcg_id = vsp.FindParm(vspaero_settings_container_id, "Xcg", "VSPAERO" )
+    #vsp.SetParmValUpdate( xcg_id, 2 )
     
     #Auto Group Control Surfaces
     
-    vsp.AutoGroupVSPAEROControlSurfaces()
-    vsp.GetNumControlSurfaceGroups() == 3
-    vsp.Update()
+    #vsp.AutoGroupVSPAEROControlSurfaces()
+    #vsp.GetNumControlSurfaceGroups() == 3
+    #vsp.Update()
     
     
-    control_group_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 ) #auto grouping produces parm containers within VSPAEROSettings
+    
+    #control_group_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 ) #auto grouping produces parm containers within VSPAEROSettings
     
     #Set Control Surface Group Deflection Angle
     
@@ -563,9 +570,10 @@ def write(vehicle,tag):
     
     #Setup export filenames
     
-    m_vspfname_for_vspaerotests = tag + ".vsp3"
-    vsp.SetVSP3FileName( m_vspfname_for_vspaerotests )  #this still needs to be done even if a call to WriteVSPFile is made
-    vsp.Update()
+    #m_vspfname_for_vspaerotests = tag + ".vsp3"
+    #vsp.SetVSP3FileName( m_vspfname_for_vspaerotests )  #this still needs to be done even if a call to WriteVSPFile is made
+    #vsp.Update()
+    
     
      
     #Final vehicle update
@@ -575,14 +583,23 @@ def write(vehicle,tag):
     
     #Save Vehicle to File
     
-    vsp.WriteVSPFile( vsp.GetVSPFileName(), vsp.SET_ALL )
+    #vsp.WriteVSPFile( vsp.GetVSPFileName(), vsp.SET_ALL )
     
     
 
     
     
 
+   
+        
+        
+    #name=vsp.FindGeomsWithName('main_wing')
     
+    #print name
+    
+    #name=vsp.FindGeomsWithName('fuselage')
+    
+    #print name
   
            
 
@@ -594,6 +611,6 @@ def write(vehicle,tag):
     
     # Write the vehicle to the file
     
-    #vsp.WriteVSPFile(tag + ".vsp3")
+    vsp.WriteVSPFile(tag + ".vsp3")
     
     return area_tags
