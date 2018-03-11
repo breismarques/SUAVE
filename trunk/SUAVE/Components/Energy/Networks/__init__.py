@@ -16,3 +16,5 @@ from Internal_Combustion_Propeller import Internal_Combustion_Propeller
 from Internal_Combustion_Propeller_Pitch import Internal_Combustion_Propeller_Pitch
 from Battery_Propeller1 import Battery_Propeller
 from Battery_Propeller import Battery_Propeller
+from Lift_Forward_Propulsor_Network import Lift_Forward_Propulsor
+from Lift_Forward_Propulsor import Lift_Forward
