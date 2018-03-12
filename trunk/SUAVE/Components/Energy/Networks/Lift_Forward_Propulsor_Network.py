@@ -21,7 +21,7 @@ from SUAVE.Components.Propulsors.Propulsor import Propulsor
 # ----------------------------------------------------------------------
 
 ## @ingroup Components-Energy-Networks
-class Lift_Forward_Propulsor(Propulsor):
+class Lift_Forward_Propulsor_Network(Propulsor):
     """ This is a complex version of battery_propeller with a battery powering propellers through
         electric motors. In this case we have 2 sets of motors at different motors that can be controlled seperately
         
@@ -76,6 +76,7 @@ class Lift_Forward_Propulsor(Propulsor):
         self.voltage                   = None
         self.thrust_angle_lift         = 0.0
         self.thrust_angle_forward      = 0.0
+        self.tag               = 'network'
         
         pass
         
