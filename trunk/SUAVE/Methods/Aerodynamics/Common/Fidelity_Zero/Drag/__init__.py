@@ -16,3 +16,4 @@ from trim import trim
 from spoiler_drag import spoiler_drag
 from untrimmed import untrimmed
 from total_aircraft import total_aircraft
+from parasite_drag_propulsor_forward import parasite_drag_propulsor_forward

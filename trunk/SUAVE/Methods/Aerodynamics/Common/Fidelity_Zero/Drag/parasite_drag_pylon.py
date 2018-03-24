@@ -61,9 +61,19 @@ def parasite_drag_pylon(state,settings,geometry):
 
     # Estimating pylon drag
     for propulsor in geometry.propulsors:
-        ref_area = propulsor.nacelle_diameter**2 / 4 * np.pi
-        pylon_parasite_drag += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient* (ref_area/geometry.reference_area * propulsor.number_of_engines)
-        pylon_wetted_area   += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].wetted_area * propulsor.number_of_engines
+        
+        try:
+            propulsor.nacelle_diameter
+        except AttributeError:
+            ref_area_forward = propulsor.nacelle_diameter_forward**2 / 4 * np.pi
+            ref_area_lift = propulsor.nacelle_diameter_lift**2 / 4 * np.pi
+            pylon_parasite_drag += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient* ((ref_area_forward+ref_area_lift)/geometry.reference_area * (propulsor.number_of_engines_forward+propulsor.number_of_engines_lift))
+            pylon_wetted_area   += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].wetted_area * (propulsor.number_of_engines_forward + propulsor.number_of_engines_lift)
+        else: 
+            ref_area = propulsor.nacelle_diameter**2 / 4 * np.pi
+            pylon_parasite_drag += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient* (ref_area/geometry.reference_area * propulsor.number_of_engines)
+            pylon_wetted_area   += pylon_factor *  conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].wetted_area * propulsor.number_of_engines
+                                                                                                  
         pylon_cf            += conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].skin_friction_coefficient
         pylon_compr_fact    += conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].compressibility_factor
         pylon_rey_fact      += conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].reynolds_factor

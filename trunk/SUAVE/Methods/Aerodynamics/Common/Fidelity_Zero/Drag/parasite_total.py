@@ -70,10 +70,23 @@ def parasite_total(state,settings,geometry):
     
     # from propulsors
     for propulsor in propulsors.values():
-        ref_area = propulsor.nacelle_diameter**2 / 4 * np.pi
-        parasite_drag = conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient 
-        conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient  = parasite_drag * ref_area/vehicle_reference_area * propulsor.number_of_engines
-        total_parasite_drag += parasite_drag * ref_area/vehicle_reference_area * propulsor.number_of_engines
+        try:
+            propulsor.nacelle_diameter
+        except AttributeError:
+            ref_area_forward = propulsor.nacelle_diameter_forward**2 / 4 * np.pi
+            ref_area_lift = propulsor.nacelle_diameter_lift**2 / 4 * np.pi
+            
+            parasite_drag = conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient
+                                                                           
+            conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient  = parasite_drag * (ref_area_forward+ref_area_lift)/vehicle_reference_area * (propulsor.number_of_engines_forward+propulsor.number_of_engines_lift)
+            total_parasite_drag += parasite_drag * (ref_area_forward+ref_area_lift)/vehicle_reference_area * (propulsor.number_of_engines_forward+propulsor.number_of_engines_lift)
+            
+        else:
+            ref_area = propulsor.nacelle_diameter**2 / 4 * np.pi
+            parasite_drag = conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient 
+            conditions.aerodynamics.drag_breakdown.parasite[propulsor.tag].parasite_drag_coefficient  = parasite_drag * ref_area/vehicle_reference_area * propulsor.number_of_engines
+            total_parasite_drag += parasite_drag * ref_area/vehicle_reference_area * propulsor.number_of_engines
+        
  
     # from pylons
     try:
