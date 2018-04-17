@@ -150,7 +150,7 @@ class Analysis(Data):
                         
                 Properties Used:
                 N/A
-            """                        
+            """ 
         
         return self.evaluate(*args,**kwarg)
     

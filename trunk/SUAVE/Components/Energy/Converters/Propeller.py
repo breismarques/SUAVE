@@ -209,6 +209,7 @@ class Propeller(Energy_Component):
             arccos_piece = np.arccos(piece)
             F            = 2.*arccos_piece/pi
             Gamma        = vt*(4.*pi*r/B)*F*(1.+(4.*lamdaw*R/(pi*B*r))*(4.*lamdaw*R/(pi*B*r)))**0.5
+                              
             
             # Ok, from the airfoil data, given Re, Ma, alpha we need to find Cl
             Cl = 2.*pi*alpha
@@ -277,7 +278,10 @@ class Propeller(Energy_Component):
         deltar   = (r[1]-r[0])
         thrust   = rho*B*(np.sum(Gamma*(Wt-epsilon*Wa)*deltar,axis=1)[:,None])
         torque   = rho*B*np.sum(Gamma*(Wa+epsilon*Wt)*r*deltar,axis=1)[:,None]
-        power    = torque*omega       
+        power    = torque*omega
+        
+        #np.set_printoptions(threshold='nan')
+        #print thrust
        
         D        = 2*R
         Cp       = power/(rho*(n*n*n)*(D*D*D*D*D))

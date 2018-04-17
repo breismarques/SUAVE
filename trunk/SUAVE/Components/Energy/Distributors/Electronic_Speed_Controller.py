@@ -77,6 +77,7 @@ class Electronic_Speed_Controller(Energy_Component):
         # Pack the output
         self.outputs.voltageout = voltsout
         
+        
         return voltsout
     
     def currentin(self):
