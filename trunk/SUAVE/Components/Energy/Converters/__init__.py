@@ -20,3 +20,4 @@ from Internal_Combustion_Engine import Internal_Combustion_Engine
 from Supersonic_Nozzle import Supersonic_Nozzle
 from Shaft_Power_Off_Take import Shaft_Power_Off_Take
 from Gearbox import Gearbox
+from Propeller_variable_pitch import Propeller_variable_pitch

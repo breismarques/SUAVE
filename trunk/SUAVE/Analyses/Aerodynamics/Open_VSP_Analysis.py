@@ -24,13 +24,13 @@ from Results import Results
 # The aero methods
 from SUAVE.Methods.Aerodynamics.Common import Fidelity_Zero as Common
 from Process_Geometry import Process_Geometry
-from SUAVE.Analyses.Aerodynamics.SU2_inviscid import SU2_inviscid
+from SUAVE.Analyses.Aerodynamics.VSP_inviscid import VSP_inviscid
 
 # ----------------------------------------------------------------------
 #  Analysis
 # ----------------------------------------------------------------------
 ## @ingroup Analyses-Aerodynamics
-class SU2_Euler(Markup):
+class Open_VSP_Analysis(Markup):
     """This uses SU2 to compute lift.
 
     Assumptions:
@@ -57,7 +57,7 @@ class SU2_Euler(Markup):
         Properties Used:
         N/A
         """       
-        self.tag    = 'SU2_Euler_markup'       
+        self.tag    = 'Open_VSP_Analysis_markup'       
     
         # Correction factors
         settings = self.settings
@@ -79,8 +79,10 @@ class SU2_Euler(Markup):
         compute = self.process.compute
         compute.lift = Process()
 
-        # Run SU2 to determine lift
-        compute.lift.inviscid                      = SU2_inviscid()
+        # Run OpenVSP to determine lift
+        compute.lift.inviscid              = VSP_inviscid()
+        #compute.lift.compressible_wings            = Methods.Lift.wing_compressibility_correction
+        #compute.lift.fuselage                      = Common.Lift.fuselage_correction
         compute.lift.total                         = Common.Lift.aircraft_total
         
         # Do a traditional drag buildup
@@ -134,10 +136,10 @@ class SU2_Euler(Markup):
         
         tag = self.geometry.tag
         # Mesh the geometry in prepartion for CFD if no training file exists
-        if self.process.compute.lift.inviscid.training_file is None:
-            write_vsp_mesh(self.geometry,tag,self.settings.half_mesh_flag,self.settings.vsp_mesh_growth_ratio,self.settings.vsp_mesh_growth_limiting_flag)
-            write_geo_file(tag)
-            mesh_geo_file(tag)
+        #if self.process.compute.lift.inviscid.training_file is None:
+        #    write_vsp_mesh(self.geometry,tag,self.settings.half_mesh_flag,self.settings.vsp_mesh_growth_ratio,self.settings.vsp_mesh_growth_limiting_flag)
+        #    write_geo_file(tag)
+        #    mesh_geo_file(tag)
         
         # Generate the surrogate
         self.process.compute.lift.inviscid.initialize()

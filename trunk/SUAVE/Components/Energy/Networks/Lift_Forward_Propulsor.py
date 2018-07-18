@@ -247,7 +247,7 @@ class Lift_Forward_Propulsor(Propulsor):
         i_forward = esc_forward.outputs.currentin*num_forward
         
         current_total = i_lift + i_forward + i_avionics_payload
-        power_total   = current_total * volts   
+        power_total   = current_total * volts  
         
         battery.inputs.current  = current_total
         battery.inputs.power_in = - power_total
@@ -287,6 +287,8 @@ class Lift_Forward_Propulsor(Propulsor):
         results = Data()
         results.thrust_force_vector = F_total
         results.vehicle_mass_rate   = mdot
+        
+        print rpm_lift
         
         return results
     

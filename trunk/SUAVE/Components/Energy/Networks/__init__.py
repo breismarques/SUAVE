@@ -23,3 +23,4 @@ from Ramjet import Ramjet
 from Battery_Propeller import Battery_Propeller
 from Lift_Forward_Propulsor import Lift_Forward_Propulsor
 from Scramjet import Scramjet
+from Internal_Combustion_Propeller_Pitch import Internal_Combustion_Propeller_Pitch
