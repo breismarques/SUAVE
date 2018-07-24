@@ -288,8 +288,6 @@ class Lift_Forward_Propulsor(Propulsor):
         results.thrust_force_vector = F_total
         results.vehicle_mass_rate   = mdot
         
-        print rpm_lift
-        
         return results
     
     def unpack_unknowns(self,segment,state):
