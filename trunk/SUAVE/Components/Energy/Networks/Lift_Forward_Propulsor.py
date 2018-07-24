@@ -156,6 +156,9 @@ class Lift_Forward_Propulsor(Propulsor):
         # Run the motor
         motor_forward.omega(conditions)
         # link
+        
+        print motor_forward.outputs.omega
+        
         propeller_forward.inputs.omega = motor_forward.outputs.omega
         propeller_forward.thrust_angle = self.thrust_angle_forward   
         

@@ -10,6 +10,7 @@ from Constant_Mach_Linear_Altitude import Constant_Mach_Linear_Altitude
 from Constant_Speed_Constant_Angle import   Constant_Speed_Constant_Angle
 from Constant_Speed_Constant_Angle_Noise import   Constant_Speed_Constant_Angle_Noise
 from Constant_Speed_Constant_Rate import Constant_Speed_Constant_Rate
+from Constant_Speed_Constant_Rate_VSP import Constant_Speed_Constant_Rate_VSP
 from Constant_Speed_Linear_Altitude import Constant_Speed_Linear_Altitude
 from Constant_Throttle_Constant_Speed import Constant_Throttle_Constant_Speed
 from Linear_Mach_Constant_Rate import Linear_Mach_Constant_Rate
@@ -19,3 +20,4 @@ from Constant_EAS_Constant_Rate import Constant_EAS_Constant_Rate
 
 from Optimized import Optimized
 from Unknown_Throttle import Unknown_Throttle
+from Unknown_Throttle_VSP import Unknown_Throttle_VSP
