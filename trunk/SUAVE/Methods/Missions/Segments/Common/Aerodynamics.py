@@ -193,7 +193,7 @@ def update_aerodynamics(segment,state):
     CLmax              = aerodynamics_model.settings.maximum_lift_coefficient
     
     # call aerodynamics model
-    results = aerodynamics_model( state )    
+    results = aerodynamics_model( state )  
     
     # unpack results
     CL = results.lift.total

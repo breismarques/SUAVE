@@ -47,6 +47,8 @@ def initialize_conditions(segment,state):
     altf       = segment.altitude_end
     t_nondim   = state.numerics.dimensionless.control_points
     conditions = state.conditions  
+    
+    print "Current Segment is:"+ segment.tag
 
     # check for initial altitude
     if alt0 is None:

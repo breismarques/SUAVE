@@ -1,4 +1,4 @@
-## @ingroup Components-Energy-Networks
+ ## @ingroup Components-Energy-Networks
 # Lift_Forward_propulsor.py
 # 
 # Created: Jan 2016, E. Botero
@@ -112,7 +112,7 @@ class Lift_Forward_Propulsor(Propulsor):
     
             Properties Used:
             Defaulted values
-        """          
+        """
         
         # unpack
         conditions        = state.conditions
@@ -157,7 +157,7 @@ class Lift_Forward_Propulsor(Propulsor):
         motor_forward.omega(conditions)
         # link
         
-        print motor_forward.outputs.omega
+        print 'Omega ='+ str(motor_forward.outputs.omega)
         
         propeller_forward.inputs.omega = motor_forward.outputs.omega
         propeller_forward.thrust_angle = self.thrust_angle_forward   

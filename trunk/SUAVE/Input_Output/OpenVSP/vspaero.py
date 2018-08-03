@@ -136,6 +136,18 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
         vsp.SetIntAnalysisInput( analysis_name, "MachNpts", mach_npts )
                                 
         vsp.Update()
+        
+        #rpm
+        
+        #rho=[float(1.23)]
+        #rpm_end=[float(MachNumber)]
+        #rpm_npts=[1]
+        
+        #vsp.SetDoubleAnalysisInput( analysis_name, "RotorDiskGeneralSettingsRho", rho )
+        #vsp.SetDoubleAnalysisInput( analysis_name, "MachEnd", mach_end )
+        #vsp.SetIntAnalysisInput( analysis_name, "MachNpts", mach_npts )
+                                
+        #vsp.Update()
                   
         ##Case Setup
         
@@ -152,7 +164,7 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
     
         #list inputs, type, and current values
     
-        #vsp.PrintAnalysisInputs(analysis_name)
+        vsp.PrintAnalysisInputs(analysis_name)
         
     
         #Execute
@@ -162,11 +174,11 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
     
         #Get & Display Results
     
-        #vsp.PrintResults(rid)
+        vsp.PrintResults(rid)
                         
         #Write in CSV
         
-        csvname='Simulation'
+        csvname='Simulation_'+tag[:-5]
         
         vsp.WriteResultsCSVFile(rid,csvname+'.csv')
         
