@@ -11,6 +11,7 @@ from SUAVE.Core import Units, Data
 import xlwt
 import string
 import openpyxl
+import io
 
 try:
     import sys
@@ -25,7 +26,7 @@ import numpy as np
 
 
 ## @ingroup Input_Output-OpenVSP
-def vspaero(tag,AoA,MachNumber,NumberIterations):
+def vspaero(tag,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, engines_number_tot):
     
     if 1==1:
 
@@ -139,13 +140,48 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
         
         #rpm
         
-        #rho=[float(1.23)]
-        #rpm_end=[float(MachNumber)]
-        #rpm_npts=[1]
+        number_eng = int(engines_number_tot)
+        print number_eng
+        forward_rpm=float(rpm_forward)
+        print forward_rpm
+        lift_rpm=float(rpm_lift)
+        print lift_rpm
         
-        #vsp.SetDoubleAnalysisInput( analysis_name, "RotorDiskGeneralSettingsRho", rho )
-        #vsp.SetDoubleAnalysisInput( analysis_name, "MachEnd", mach_end )
-        #vsp.SetIntAnalysisInput( analysis_name, "MachNpts", mach_npts )
+        g=int(0)
+        
+        while g<number_eng:
+            
+            if g<2:
+                
+                if forward_rpm==0.0:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, float(0.001))
+                else:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, forward_rpm)
+
+            else:
+                
+                if lift_rpm==0.0:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, float(0.001))
+                else:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, lift_rpm)
+
+            g=g+1
+                
+                
+        
+        #vsp.SetDoubleAnalysisInput( analysis_name, "MachABFDS", mach_start )
+        
+        vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+        rpm_cruise_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_0')
+        vsp.SetParmValUpdate( rpm_cruise_id, 1000.0)
                                 
         #vsp.Update()
                   
@@ -189,11 +225,11 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
     
         # Check for errors
 
-        #errorMgr = vsp.ErrorMgrSingleton_getInstance()
-        #num_err = errorMgr.GetNumTotalErrors()
-        #for i in range(0, num_err):
-        #    err = errorMgr.PopLastError()
-        #    print("error = ", err.m_ErrorString)
+        errorMgr = vsp.ErrorMgrSingleton_getInstance()
+        num_err = errorMgr.GetNumTotalErrors()
+        for i in range(0, num_err):
+            err = errorMgr.PopLastError()
+            print("error = ", err.m_ErrorString)
             
         print 'FINISHED VSPAERO SIMULATION'
         
@@ -210,12 +246,21 @@ def vspaero(tag,AoA,MachNumber,NumberIterations):
 
         wb.save(csvname+'.xlsx')
         
+        #xlsx_filename=csvname+'.xlsx'
+        
+        #with open(xlsx_filename, "rb") as f:
+        #    in_mem_file = io.BytesIO(f.read())
+
+        #book = openpyxl.load_workbook(in_mem_file, read_only=True)
+        
         book = openpyxl.load_workbook(csvname+'.xlsx')
         
         sheet = book.active
         
         CL = sheet[chr(NumberIterations+65)+'19'].value
         CD = sheet[chr(NumberIterations+65)+'15'].value
+                   
+        #book.save(csvname+'.xlsx')
         
         
     

@@ -157,8 +157,6 @@ class Lift_Forward_Propulsor(Propulsor):
         motor_forward.omega(conditions)
         # link
         
-        print 'Omega ='+ str(motor_forward.outputs.omega)
-        
         propeller_forward.inputs.omega = motor_forward.outputs.omega
         propeller_forward.thrust_angle = self.thrust_angle_forward   
         
@@ -260,7 +258,9 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Pack the conditions
         rpm_lift             = motor_lift.outputs.omega*60./(2.*np.pi)
-        rpm_forward          = motor_forward.outputs.omega*60./(2.*np.pi)        
+        print rpm_lift
+        rpm_forward          = motor_forward.outputs.omega*60./(2.*np.pi)
+        print rpm_forward        
         battery_draw         = battery.inputs.power_in 
         battery_energy       = battery.current_energy
         voltage_open_circuit = battery.voltage_open_circuit

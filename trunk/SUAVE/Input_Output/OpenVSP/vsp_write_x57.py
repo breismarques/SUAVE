@@ -487,7 +487,7 @@ def vsp_write_x57(vehicle,tag):
             vsp.SetParmVal(fuse_id,"AllSym","XSec_4",1)
     
         vsp.SetParmVal(fuse_id,"Length","Design",length)
-        vsp.SetParmVal(fuse_id,"Diameter","Design",width)
+        #vsp.SetParmVal(fuse_id,"Diameter","Design",width)
         vsp.SetParmVal(fuse_id,"XLocPercent","XSec_1",x1)
         vsp.SetParmVal(fuse_id,"XLocPercent","XSec_2",x2)
         vsp.SetParmVal(fuse_id,"XLocPercent","XSec_3",x3)
@@ -533,11 +533,24 @@ def vsp_write_x57(vehicle,tag):
         prop_lift = network.propeller_lift
         t_radius_lift=prop_lift.tip_radius
         
+        mid_fuselage_width = (fuselage.width/2.0)
+        
         # Design Lift Propellers
 
         n_engines_lift_2=n_engines_lift/2.0
+        
+        if n_engines_lift_2==7:
+            
+            prop_dist=((mid_span-t_radius_forward-mid_fuselage_width-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2*1.0-1.0))*10.0
+                      
+        else:
+            
+            prop_dist=(mid_span-t_radius_forward-mid_fuselage_width-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2*1.0-1.0)
+
     
-        prop_dist=(mid_span-t_radius_forward-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2+1.0)
+        #prop_dist=((mid_span-t_radius_forward-mid_fuselage_width-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2*1.0-1.0))
+        
+        print prop_dist
         
         i=0
         
@@ -551,8 +564,8 @@ def vsp_write_x57(vehicle,tag):
             #   y_pos_lift=float(i)*prop_dist+t_radius_lift*float(i)
            #else:
            #    y_pos_lift=float(i)*prop_dist+t_radius_lift*float((i+1))
-           y_pos_lift_1=prop_dist+t_radius_lift
-           y_pos_lift=y_pos_lift_1+(prop_dist+2*t_radius_lift)*float(i)
+           y_pos_lift_1=mid_fuselage_width+0.25*mid_fuselage_width    #prop_dist+t_radius_lift
+           y_pos_lift=y_pos_lift_1+(prop_dist+2.0*t_radius_lift)*float(i)
            
            x_pos_lift=vehicle.wings.main_wing.origin[0]+y_pos_lift*math.tan(vehicle.wings.main_wing.sweeps.leading_edge*math.pi/180.0)-0.1*(vehicle.wings.main_wing.chords.root)
            z_pos_lift=vehicle.wings.main_wing.origin[2]+y_pos_lift*math.tan(vehicle.wings.main_wing.dihedral*math.pi/180.0)

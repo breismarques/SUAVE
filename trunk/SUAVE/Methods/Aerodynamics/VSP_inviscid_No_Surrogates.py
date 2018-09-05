@@ -65,7 +65,7 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         self.geometry = Data()
         self.settings = Data()
         
-        self.iters = 15 #OpenVSP number of iterations
+        self.iters = 5 #OpenVSP number of iterations
 
 
     def evaluate(self,state,settings,geometry):
@@ -96,6 +96,9 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         
         mach = conditions.freestream.mach_number
         AoA  = conditions.aerodynamics.angle_of_attack
+        engines_number_tot = geometry.propulsors.propulsor.number_of_engines_forward + geometry.propulsors.propulsor.number_of_engines_lift
+        rpm_forward = conditions.propulsion.rpm_forward
+        rpm_lift =  conditions.propulsion.rpm_lift
         
         # Build OpenVSP geometry file
         tag  = geometry.tag
@@ -106,15 +109,18 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         inviscid_lift = np.zeros([data_len,1])
         CD = np.zeros([data_len,1])
         time0 = time.time()
+        
+        initial_time = geometry.fuselages.fuselage.time
+        
         for ii,_ in enumerate(AoA):
-            inviscid_lift[ii], CD[ii] = vspaero(tag + ".vsp3", AoA[ii][0], mach[ii][0], self.iters)
+            inviscid_lift[ii], CD[ii] = vspaero(tag + ".vsp3", AoA[ii][0], mach[ii][0], self.iters, rpm_forward[ii][0], rpm_lift[ii][0], engines_number_tot)
             print 'CL='+str(inviscid_lift[ii])
             print 'CD='+str(CD[ii])
             
         time1 = time.time()
             
-        print 'The total elapsed time to run VSPAERO: '+ str(time1-time0) + '  Seconds'
-        print 'Current Simulation time is :' + str(time1) + '  Seconds'
+        print 'The total elapsed time to run VSPAERO: '+ str(time1-time0) + '  seconds'
+        print 'Current Simulation time is :' + str(time1-initial_time) + '  seconds'
             
         conditions.aerodynamics.lift_breakdown.inviscid_wings_lift       = Data()
         conditions.aerodynamics.lift_breakdown.inviscid_wings_lift.total = inviscid_lift
