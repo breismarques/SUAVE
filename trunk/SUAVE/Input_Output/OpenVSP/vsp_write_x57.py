@@ -11,6 +11,7 @@
 
 import SUAVE
 from SUAVE.Core import Units, Data
+from subprocess import call
 
 try:
     import sys

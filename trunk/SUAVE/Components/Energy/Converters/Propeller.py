@@ -300,6 +300,8 @@ class Propeller(Energy_Component):
         power[conditions.propulsion.throttle[:,0]  <=0.0] = 0.0
         
         thrust[omega1<0.0] = - thrust[omega1<0.0]
+        
+        C_thrust = thrust/(rho*(n*n)*(D*D*D*D))
 
         etap     = V*thrust/power     
         
@@ -323,7 +325,7 @@ class Propeller(Energy_Component):
         )
         
         
-        return thrust, torque, power, Cp
+        return thrust, torque, power, Cp , C_thrust
     
     
 

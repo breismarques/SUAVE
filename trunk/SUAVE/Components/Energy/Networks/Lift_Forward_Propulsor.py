@@ -162,7 +162,9 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Run the propeller
         #F_forward, Q_forward, P_forward, Cp_forward = propeller_forward.spin_surrogate(conditions)
-        F_forward, Q_forward, P_forward, Cp_forward = propeller_forward.spin(conditions)
+        F_forward, Q_forward, P_forward, Cp_forward, Ct_forward = propeller_forward.spin(conditions)
+        
+        conditions.propulsion.propeller_thrust_coefficient_forward = Ct_forward
             
         # Check to see if magic thrust is needed, the ESC caps throttle at 1.1 already
         eta = conditions.propulsion.throttle[:,0,None]
@@ -212,7 +214,9 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Run the propeller
         #F_lift, Q_lift, P_lift, Cp_lift = propeller_lift.spin_surrogate(konditions)
-        F_lift, Q_lift, P_lift, Cp_lift = propeller_lift.spin(konditions)
+        F_lift, Q_lift, P_lift, Cp_lift, Ct_lift = propeller_lift.spin(konditions)
+        
+        conditions.propulsion.propeller_thrust_coefficient_lift = Ct_lift
             
         # Check to see if magic thrust is needed, the ESC caps throttle at 1.1 already
         eta = state.conditions.propulsion.lift_throttle
@@ -258,9 +262,7 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Pack the conditions
         rpm_lift             = motor_lift.outputs.omega*60./(2.*np.pi)
-        print rpm_lift
-        rpm_forward          = motor_forward.outputs.omega*60./(2.*np.pi)
-        print rpm_forward        
+        rpm_forward          = motor_forward.outputs.omega*60./(2.*np.pi)      
         battery_draw         = battery.inputs.power_in 
         battery_energy       = battery.current_energy
         voltage_open_circuit = battery.voltage_open_circuit

@@ -204,6 +204,8 @@ def get_values(dictionary,outputs,aliases):
     
     npoutputs   = np.array(outputs)
     output_names = npoutputs[:,0]
+    
+    print aliases
         
     # Correspond aliases to outputs
     pointer = []

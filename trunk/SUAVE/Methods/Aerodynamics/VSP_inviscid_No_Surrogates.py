@@ -11,6 +11,7 @@
 # SUAVE imports
 import SUAVE
 from SUAVE.Core import Data, Units
+from subprocess import call
 
 # Local imports
 from SUAVE.Analyses.Aerodynamics import Aerodynamics
@@ -65,7 +66,7 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         self.geometry = Data()
         self.settings = Data()
         
-        self.iters = 5 #OpenVSP number of iterations
+        self.iters = 3 #OpenVSP number of iterations
 
 
     def evaluate(self,state,settings,geometry):
@@ -100,6 +101,17 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         rpm_forward = conditions.propulsion.rpm_forward
         rpm_lift =  conditions.propulsion.rpm_lift
         
+        #print conditions.freestream
+        
+        rho=conditions.freestream.density
+        vel=conditions.freestream.velocity
+        
+        Cp_lift=conditions.propulsion.propeller_power_coefficient_lift
+        Cp_forward=conditions.propulsion.propeller_power_coefficient
+        
+        Ct_lift=conditions.propulsion.propeller_thrust_coefficient_lift
+        Ct_forward = conditions.propulsion.propeller_thrust_coefficient_forward
+        
         # Build OpenVSP geometry file
         tag  = geometry.tag
         vsp_write_x57(geometry, tag)
@@ -113,7 +125,7 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         initial_time = geometry.fuselages.fuselage.time
         
         for ii,_ in enumerate(AoA):
-            inviscid_lift[ii], CD[ii] = vspaero(tag + ".vsp3", AoA[ii][0], mach[ii][0], self.iters, rpm_forward[ii][0], rpm_lift[ii][0], engines_number_tot)
+            inviscid_lift[ii], CD[ii] = vspaero(tag + ".vsp3", rho[ii][0], vel[ii][0], AoA[ii][0], mach[ii][0], self.iters, rpm_forward[ii][0], rpm_lift[ii][0], engines_number_tot, Cp_lift[ii][0], Cp_forward[ii][0], Ct_lift[ii][0], Ct_forward[ii][0])
             print 'CL='+str(inviscid_lift[ii])
             print 'CD='+str(CD[ii])
             
