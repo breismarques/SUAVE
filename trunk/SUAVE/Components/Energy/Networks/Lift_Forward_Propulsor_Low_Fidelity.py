@@ -33,7 +33,7 @@ Data, Container
 # For any segment using this, body angle can't be an unknown.
 
 
-class Lift_Forward_Low_Fidelity(Propulsor):
+class Lift_Forward_Propulsor_Low_Fidelity(Propulsor):
     def __defaults__(self):
         self.motor_lift                = None
         self.motor_forward             = None

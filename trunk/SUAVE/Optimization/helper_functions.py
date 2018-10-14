@@ -206,12 +206,15 @@ def get_values(dictionary,outputs,aliases):
     output_names = npoutputs[:,0]
     
     print aliases
+    print output_names
         
     # Correspond aliases to outputs
     pointer = []
     for ii in xrange(0,len(output_names)):
         for jj in xrange(0,len(aliases)):
             if output_names[ii] == aliases[jj][0]:
+                print jj
+                print ii
                 pointer.append(aliases[jj][1])    
                 
     values = np.zeros(len(outputs))

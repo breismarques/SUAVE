@@ -56,7 +56,7 @@ class Propeller_Lo_Fid(Energy_Component):
         self.design_thrust         = 0.0
 
         
-    def spin(self,conditions):
+    def spin_lo_2(self,conditions):
         """Analyzes a propeller given geometry and operating conditions.
 
         Assumptions:
@@ -165,10 +165,12 @@ class Propeller_Lo_Fid(Energy_Component):
         
         thrust = etap*power/V
         
+        C_thrust = thrust/(rho*(n*n)*(D*D*D*D))
+        
         Cp     = power/(rho*(n*n*n)*(D*D*D*D*D))
         conditions.propulsion.etap = etap
         
-        return thrust, Qm, power, Cp    
+        return thrust, Qm, power, Cp , C_thrust   
     
     def spin_lo(self,conditions):
         """ Analyzes a propeller given geometry and operating conditions

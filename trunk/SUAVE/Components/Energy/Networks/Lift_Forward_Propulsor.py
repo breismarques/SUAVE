@@ -155,6 +155,8 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Run the motor
         motor_forward.omega(conditions)
+        
+        #print 'Mforward_omega= ',motor_forward.outputs.omega
         # link
         
         propeller_forward.inputs.omega = motor_forward.outputs.omega
@@ -172,7 +174,8 @@ class Lift_Forward_Propulsor(Propulsor):
         F_forward[eta>1.0] = F_forward[eta>1.0]*eta[eta>1.0]        
         
         # Run the motor for current
-        motor_forward.current(conditions)  
+        motor_forward.current(conditions) 
+        #print 'Mforward_i= ',motor_forward.outputs.current
         # link
         esc_forward.inputs.currentout =  motor_forward.outputs.current     
         
@@ -208,6 +211,7 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Run the motor
         motor_lift.omega(konditions)
+        #print 'Mlift_omega= ',motor_lift.outputs.omega
         # link
         propeller_lift.inputs.omega =  motor_lift.outputs.omega
         propeller_lift.thrust_angle = self.thrust_angle_lift
@@ -225,6 +229,7 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Run the motor for current
         motor_lift.current(conditions)  
+        #print 'Mlift_i= ',motor_lift.outputs.current
         # link
         esc_lift.inputs.currentout =  motor_lift.outputs.current     
         
