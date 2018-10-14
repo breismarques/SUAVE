@@ -282,6 +282,7 @@ class Lift_Forward_Propulsor_Network_Lo_Fi(Propulsor):
         
         results = Data()
         results.thrust_force_vector = F_total
+        print F_total
         results.vehicle_mass_rate   = mdot
         
         return results
