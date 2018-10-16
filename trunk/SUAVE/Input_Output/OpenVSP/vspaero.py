@@ -13,6 +13,7 @@ import xlwt
 import string
 import openpyxl
 import io
+import os
 
 try:
     import sys
@@ -377,7 +378,16 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
             for line in f:
                 data.append([word for word in line.split(",") if word])
         f.close()
-        print NumberIterations
+        
+        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+csvname+'.csv'
+
+        ## If file exists, delete it ##
+        if os.path.isfile(myfile):
+            os.remove(myfile)
+        else:    ## Show an error ##
+            print("Error: %s file not found" % myfile)
+        
+        
         
         #print float(lift[:-1])
         #print float(drag[:-1])

@@ -160,6 +160,10 @@ class Lift_Forward_Propulsor(Propulsor):
         # link
         
         propeller_forward.inputs.omega = motor_forward.outputs.omega
+        
+        #New line
+        propeller_forward.inputs.torque = motor_forward.outputs.torque
+        
         propeller_forward.thrust_angle = self.thrust_angle_forward   
         
         # Run the propeller
@@ -214,6 +218,10 @@ class Lift_Forward_Propulsor(Propulsor):
         #print 'Mlift_omega= ',motor_lift.outputs.omega
         # link
         propeller_lift.inputs.omega =  motor_lift.outputs.omega
+        
+        #New line
+        propeller_lift.inputs.torque = motor_lift.outputs.torque
+        
         propeller_lift.thrust_angle = self.thrust_angle_lift
         
         # Run the propeller
