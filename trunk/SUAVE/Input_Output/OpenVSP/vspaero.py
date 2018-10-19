@@ -14,6 +14,7 @@ import string
 import openpyxl
 import io
 import os
+import math
 
 try:
     import sys
@@ -185,6 +186,10 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                 if forward_rpm==0.0:
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, float(0.001))     
+                elif math.isnan(forward_rpm)==True:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, float(0.001))
                 else:
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
@@ -194,6 +199,10 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
             else:
                 
                 if lift_rpm==0.0:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
+                    vsp.SetParmVal( rpm_id, float(0.001))
+                elif math.isnan(lift_rpm)==True:
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, float(0.001))
@@ -231,6 +240,10 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, 1000.00000)
+                elif math.isnan(forward_Cp)==True:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
+                    vsp.SetParmVal( cp_id, 0.0)
                     
                 else:
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
@@ -250,6 +263,10 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, 1000.00000)
+                elif math.isnan(lift_Cp)==True:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
+                    vsp.SetParmVal( cp_id, 0.0)
                     
                 else:
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
@@ -285,6 +302,11 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, 1000.00000)
                     
+                elif math.isnan(forward_Ct)==True:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
+                    vsp.SetParmVal( ct_id, 0.001)
+                    
                 else:
                     
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
@@ -305,6 +327,11 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, 1000.00000)
+                    
+                elif math.isnan(lift_Ct)==True:
+                    vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
+                    ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
+                    vsp.SetParmVal( ct_id, 0.001)
                     
                 else:
                     
@@ -392,23 +419,23 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         #print float(lift[:-1])
         #print float(drag[:-1])
         
-        try:
+        #try:
             
-            lift=data[18][NumberIterations]
+        lift=data[18][NumberIterations]
             
-        except IndexError:
+        #except IndexError:
             
-            print 'INDEX ERROR'
-            lift='-10.0000'
+        #    print 'INDEX ERROR'
+        #    lift='-10.0000'
             
-        try:
+        #try:
             
-            drag=data[14][NumberIterations]
+        drag=data[14][NumberIterations]
             
-        except IndexError:
+        #except IndexError:
             
-            print 'INDEX ERROR'
-            drag='-10.0000'
+        #    print 'INDEX ERROR'
+        #    drag='-10.0000'
             
                 
         #wb = openpyxl.Workbook()
