@@ -194,14 +194,14 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, aux_rpm_1)
-                    print 'NaN VALUE'
+
                 else:
                     aux_rpm_1=forward_rpm
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, aux_rpm_1)
                     
-                print 'RPM_1= ',aux_rpm_1
+
 
             else:
                 
@@ -215,14 +215,14 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, aux_rpm_2)
-                    print 'NaN VALUE'
+ 
                 else:
                     aux_rpm_2=lift_rpm
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     rpm_id = vsp.FindParm( vspaero_settings_container_id, 'RotorRPM', 'Rotor_'+str(g))
                     vsp.SetParmVal( rpm_id, aux_rpm_2)
                     
-                print 'RPM_2= ',aux_rpm_2
+
 
             g=g+1
             
@@ -262,7 +262,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, aux_cp_1)
-                    print 'NaN VALUE'
+
                     
                 else:
                     aux_cp_1=forward_Cp
@@ -270,7 +270,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, aux_cp_1)
                     
-                print 'CP_1= ',aux_cp_1
+
                 
             
 
@@ -292,7 +292,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, aux_cp_2)
-                    print 'NaN VALUE'
+
                     
                 else:
                     aux_cp_2=lift_Cp
@@ -300,7 +300,6 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     cp_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCP', 'Rotor_'+str(g))
                     vsp.SetParmVal( cp_id, aux_cp_2)
                     
-                print 'CP_2= ',aux_cp_2
 
             g=g+1
             
@@ -338,7 +337,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, aux_ct_1)
-                    print 'NaN VALUE'
+
                     
                 else:
                     aux_ct_1=0.001
@@ -346,7 +345,6 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, aux_ct_1)
                     
-                print 'CT_1= ',aux_ct_1
                                
 
             else:
@@ -368,15 +366,14 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, aux_ct_2)
-                    print 'NaN VALUE'
+
                     
                 else:
                     aux_ct_2=0.001
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, aux_ct_2)
-                    
-                print 'CT_2= ',aux_ct_2
+
                               
 
             g=g+1
@@ -421,9 +418,9 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
                         
         #Write in CSV
         
-        csvname='Simulation_'+tag[:-5]
+        #csvname='Simulation_'+tag[:-5]
         
-        vsp.WriteResultsCSVFile(rid,csvname+'.csv')
+        #vsp.WriteResultsCSVFile(rid,csvname+'.csv')
         
         #Close File
         
@@ -439,33 +436,31 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
             
         print 'FINISHED VSPAERO SIMULATION'
         
+        #data = []
+        #with open(csvname+'.csv') as f:
+        #    for line in f:
+        #        data.append([word for word in line.split(",") if word])
+        #f.close()
+        
+        #try:
+        #    lift=data[18][NumberIterations]
+        #    drag=data[14][NumberIterations]
+            
+        #    CL = float(lift[:-1])
+        #    CD = float(drag[:-1])
+        
+        #except IndexError:
+            
+        os.system('/anaconda/bin/vspaero -fs '+str(mach_start[0])+'  END '+str(alpha_start[0])+'  END '+str(beta_start[0])+'  END -omp 4 -nowake 4 '+tag[:-5]+'_DegenGeom')
+            
         data = []
-        with open(csvname+'.csv') as f:
+        with open(tag[:-5]+'_DegenGeom.fem') as f:
             for line in f:
-                data.append([word for word in line.split(",") if word])
+                data.append([word for word in line.split(" ") if word])
         f.close()
         
-        try:
-            lift=data[18][NumberIterations]
-            drag=data[14][NumberIterations]
-            
-            CL = float(lift[:-1])
-            CD = float(drag[:-1])
-        
-        except IndexError:
-            
-            print 'INDEX ERROR'
-            
-            os.system('/anaconda/bin/vspaero -fs '+str(mach_start[0])+'  END '+str(alpha_start[0])+'  END '+str(beta_start[0])+'  END -omp 4 -nowake 4 '+tag[:-5]+'_DegenGeom')
-            
-            data = []
-            with open(tag[:-5]+'_DegenGeom.fem') as f:
-                for line in f:
-                    data.append([word for word in line.split(" ") if word])
-            f.close()
-        
-            CL=float(data[100][2])
-            CD=float(data[101][2])
+        CL=float(data[100][2])
+        CD=float(data[101][2])
             
             
         #try:
@@ -477,13 +472,13 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         #    print 'INDEX ERROR'
         #    drag='-10.0000'
         
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+csvname+'.csv'
+        #myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+csvname+'.csv'
 
         ## If file exists, delete it ##
-        if os.path.isfile(myfile):
-            os.remove(myfile)
-        else:    ## Show an error ##
-            print("Error: %s file not found" % myfile)
+        #if os.path.isfile(myfile):
+        #    os.remove(myfile)
+        #else:    ## Show an error ##
+        #    print("Error: %s file not found" % myfile)
             
         myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.lod'
 
