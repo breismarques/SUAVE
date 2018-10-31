@@ -99,7 +99,11 @@ def vsp_write_x57(vehicle,tag):
         print 'VSP import failed'
         return -1
     
+    vsp.VSPCheckSetup()
+    vsp.VSPRenew()
+    
     area_tags = dict() # for wetted area assignment
+    
                
     
     # -------------
@@ -654,5 +658,7 @@ def vsp_write_x57(vehicle,tag):
     # Write the vehicle to the file
     
     vsp.WriteVSPFile(tag + ".vsp3")
+    
+    vsp.ClearVSPModel();
     
     return area_tags
