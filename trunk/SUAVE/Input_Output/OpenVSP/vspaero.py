@@ -49,6 +49,27 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
     
         vsp.ReadVSPFile(tag)
         
+        #//==== Execute Mass Properties Analysis ====//
+        #// Set defaults
+        vsp.SetAnalysisInputDefaults( "MassProp" );
+        #PrintAnalysisInputs( "MassProp" );
+        ridmp = vsp.ExecAnalysis( "MassProp" );
+        #PrintResults( ridmp );
+        #csvname='Mass_Prop_'+tag[:-5]
+        #vsp.WriteResultsCSVFile( ridmp, csvname+'.csv');
+           
+        data = []
+        with open(tag[:-5]+"_MassProps.txt") as f:
+            for line in f:
+                data.append([word for word in line.split(" ") if word])
+        f.close()
+        
+        Xcg=float(data[8][0])
+        Ycg=float(data[8][1])
+        Zcg=float(data[8][2])
+
+        vsp.DeleteGeomVec( vsp.GetStringResults( ridmp, "Mesh_GeomID" ) );
+        
         #==== Analysis: VSPAero Compute Geometry to Create Vortex Lattice DegenGeom File ====//
         
         compgeom_name = "VSPAEROComputeGeometry";
@@ -91,26 +112,38 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         
         wing_id=vsp.FindGeomsWithName("main_wing")
         
-        sref=[float(0)]*1
-        bref=[float(0)]*1
-        cref=[float(0)]*1
+        #print wing_id[0]
+        
+        #sref=[float(0)]*1
+        #bref=[float(0)]*1
+        #cref=[float(0)]*1
         
         
-        sref[0]=(vsp.GetParmVal(wing_id[0],"TotalArea", "WingGeom"))
-        bref[0]=(vsp.GetParmVal(wing_id[0],"TotalSpan", "WingGeom"))
-        cref[0]=(vsp.GetParmVal(wing_id[0],"TotalChord", "WingGeom"))
+        #sref[0]=(vsp.GetParmVal(wing_id[0],"TotalArea", "WingGeom"))
+        #bref[0]=(vsp.GetParmVal(wing_id[0],"TotalSpan", "WingGeom"))
+        #cref[0]=(vsp.GetParmVal(wing_id[0],"TotalChord", "WingGeom"))
         
-        print sref
-        print bref
-        print cref
+        #print sref
+        #print bref
+        #print cref
         
-        ref_flag=[3]
+        ref_flag=[1]
+        #ref_wing=[1]
         
         
-        vsp.SetDoubleAnalysisInput( analysis_name, 'Sref', sref )
-        vsp.SetDoubleAnalysisInput( analysis_name, 'bref', bref )
-        vsp.SetDoubleAnalysisInput( analysis_name, 'cref', cref )
+        #vsp.SetDoubleAnalysisInput( analysis_name, 'Sref', sref )
+        #vsp.SetDoubleAnalysisInput( analysis_name, 'bref', bref )
+        #vsp.SetDoubleAnalysisInput( analysis_name, 'cref', cref )
         vsp.SetIntAnalysisInput( analysis_name, "RefFlag", ref_flag )
+        vsp.SetStringAnalysisInput( analysis_name, 'WingID', wing_id )
+        
+        
+        #Center of Gravity
+        
+        vsp.SetDoubleAnalysisInput( analysis_name, "Xcg", [Xcg] )
+        vsp.SetDoubleAnalysisInput( analysis_name, "Ycg", [Ycg] )
+        vsp.SetDoubleAnalysisInput( analysis_name, "Zcg", [Zcg] )
+
         
                                  
         #Freestream parameters
@@ -544,13 +577,14 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        #myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'.vsp3'
+            
+        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+"_MassProps.txt"
 
-        ## If file exists, delete it ##
-        #if os.path.isfile(myfile):
-        #    os.remove(myfile)
-        #else:    ## Show an error ##
-        #    print("Error: %s file not found" % myfile)
+        # If file exists, delete it ##
+        if os.path.isfile(myfile):
+            os.remove(myfile)
+        else:    ## Show an error ##
+            print("Error: %s file not found" % myfile)
         
         
         
