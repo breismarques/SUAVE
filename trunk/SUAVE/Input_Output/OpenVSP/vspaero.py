@@ -29,7 +29,7 @@ import numpy as np
 
 
 ## @ingroup Input_Output-OpenVSP
-def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, engines_number_tot, Cp_lift, Cp_forward, Ct_lift, Ct_forward):
+def vspaero(vel_sound,tag,rho,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, engines_number_tot, Cp_lift, Cp_forward, Ct_lift, Ct_forward):
     
     if 1==1:
 
@@ -149,8 +149,8 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         #Freestream parameters
         #Alpha
         
-        alpha_start=[float(AoA)]
-        alpha_end=[float(AoA)]
+        alpha_start=[float(math.degrees(AoA))]
+        alpha_end=[float(math.degrees(AoA))]
         alpha_npts=[1]
         
         print alpha_start
@@ -184,6 +184,8 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         vsp.Update()
         
         #Vinf
+        
+        vel=MachNumber * vel_sound
         
         vel_rotor=float(vel)
         print vel_rotor
@@ -512,8 +514,10 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         #    os.remove(myfile)
         #else:    ## Show an error ##
         #    print("Error: %s file not found" % myfile)
+        
+        cwd = os.getcwd()
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.lod'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.lod'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -521,7 +525,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.adb.cases'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.adb.cases'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -529,7 +533,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.adb'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.adb'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -537,7 +541,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.history'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.history'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -545,7 +549,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.polar'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.polar'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -553,7 +557,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.fem'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.fem'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -561,7 +565,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.vspaero'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.vspaero'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -569,7 +573,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
         else:    ## Show an error ##
             print("Error: %s file not found" % myfile)
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+'_DegenGeom.csv'
+        myfile=cwd+'/'+tag[:-5]+'_DegenGeom.csv'
 
         ## If file exists, delete it ##
         if os.path.isfile(myfile):
@@ -578,7 +582,7 @@ def vspaero(tag,rho,vel,AoA,MachNumber,NumberIterations, rpm_forward, rpm_lift, 
             print("Error: %s file not found" % myfile)
             
             
-        myfile="/Users/Bruno/Documents/Delft/Courses/2016-2017/Thesis/Code/Bruno_Aircraft/Optimization_Lo_Fid/"+tag[:-5]+"_MassProps.txt"
+        myfile=cwd+'/'+tag[:-5]+"_MassProps.txt"
 
         # If file exists, delete it ##
         if os.path.isfile(myfile):

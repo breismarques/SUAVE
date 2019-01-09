@@ -9,3 +9,4 @@ import Supersonic_Zero
 import Common
 import Lifting_Line
 from VSP_inviscid_No_Surrogates import VSP_inviscid_No_Surrogates
+from VSP_Analysis_OLS import VSP_Analysis_OLS

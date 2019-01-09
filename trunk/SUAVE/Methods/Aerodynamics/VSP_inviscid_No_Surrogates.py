@@ -104,7 +104,7 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         #print conditions.freestream
         
         rho=conditions.freestream.density
-        vel=conditions.freestream.velocity
+        vel_sound=conditions.freestream.speed_of_sound
         
         Cp_lift=conditions.propulsion.propeller_power_coefficient_lift
         Cp_forward=conditions.propulsion.propeller_power_coefficient
@@ -125,7 +125,7 @@ class VSP_inviscid_No_Surrogates(Aerodynamics):
         initial_time = geometry.fuselages.fuselage.time
         
         for ii,_ in enumerate(AoA):
-            inviscid_lift[ii], CD[ii] = vspaero(tag + ".vsp3", rho[ii][0], vel[ii][0], AoA[ii][0], mach[ii][0], self.iters, rpm_forward[ii][0], rpm_lift[ii][0], engines_number_tot, Cp_lift[ii][0], Cp_forward[ii][0], Ct_lift[ii][0], Ct_forward[ii][0])
+            inviscid_lift[ii], CD[ii] = vspaero(vel_sound[ii][0],tag + ".vsp3", rho[ii][0], AoA[ii][0], mach[ii][0], self.iters, rpm_forward[ii][0], rpm_lift[ii][0], engines_number_tot, Cp_lift[ii][0], Cp_forward[ii][0], Ct_lift[ii][0], Ct_forward[ii][0])
             print 'CL='+str(inviscid_lift[ii])
             print 'CD='+str(CD[ii])
             

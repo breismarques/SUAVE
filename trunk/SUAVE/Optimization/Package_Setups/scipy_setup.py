@@ -17,7 +17,7 @@ import scipy as sp
 # ----------------------------------------------------------------------
 
 ## @ingroup Optimization-Package_Setups
-def SciPy_Solve(problem,solver='SLSQP', sense_step = 1.4901161193847656e-08): #
+def SciPy_Solve(problem,solver='SLSQP', sense_step = 1.4901161193847656e-08): #1.4901161193847656e-08): 
     """ This converts your SUAVE Nexus problem into a SciPy optimization problem and solves it
         SciPy has many algorithms, they can be switched out by using the solver input. 
 

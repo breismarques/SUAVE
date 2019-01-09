@@ -24,7 +24,7 @@ from Results import Results
 # The aero methods
 from SUAVE.Methods.Aerodynamics.Common import Fidelity_Zero as Common
 from Process_Geometry import Process_Geometry
-from SUAVE.Analyses.Aerodynamics.VSP_inviscid import VSP_inviscid
+from SUAVE.Methods.Aerodynamics import VSP_Analysis_OLS
 
 # ----------------------------------------------------------------------
 #  Analysis
@@ -80,7 +80,7 @@ class Open_VSP_Analysis(Markup):
         compute.lift = Process()
 
         # Run OpenVSP to determine lift
-        compute.lift.inviscid              = VSP_inviscid()
+        compute.lift.inviscid              = VSP_Analysis_OLS()
         #compute.lift.compressible_wings            = Methods.Lift.wing_compressibility_correction
         #compute.lift.fuselage                      = Common.Lift.fuselage_correction
         compute.lift.total                         = Common.Lift.aircraft_total
