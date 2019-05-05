@@ -487,17 +487,30 @@ def vspaero(vel_sound,tag,rho,AoA,MachNumber,NumberIterations, rpm_forward, rpm_
         #except IndexError:
             
         os.system('/anaconda/bin/vspaero -fs '+str(mach_start[0])+'  END '+str(alpha_start[0])+'  END '+str(beta_start[0])+'  END -omp 4 -nowake 4 '+tag[:-5]+'_DegenGeom')
-            
-        data = []
-        with open(tag[:-5]+'_DegenGeom.fem') as f:
-            for line in f:
-                data.append([word for word in line.split(" ") if word])
-        f.close()
         
-        CL=float(data[100][2])
-        CD=float(data[101][2])
+        data = []
+        try:
+            
+            with open(tag[:-5]+'_DegenGeom.fem') as f:
+                for line in f:
+                    data.append([word for word in line.split(" ") if word])
+            f.close()
+        
+            CL=float(data[100][2])
+            CD=float(data[101][2])
             
             
+        except IOError:
+            
+            print "Other part of code"
+            os.system('/anaconda/bin/vspaero -fs '+str(mach_start[0])+'  END '+str(alpha_start[0])+'  END '+str(beta_start[0])+'  END -omp 4 -nowake 4 '+tag[:-5]+'_DegenGeom')
+            with open(tag[:-5]+'_DegenGeom.fem') as f:
+                for line in f:
+                    data.append([word for word in line.split(" ") if word])
+            f.close()
+        
+            CL=float(data[100][2])
+            CD=float(data[101][2])
         #try:
             
         #drag=data[14][NumberIterations]
