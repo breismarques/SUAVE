@@ -54,6 +54,7 @@ class Motor_Lo_Fid(Energy_Component):
         self.motor_efficiency   = 0.0
         self.rated_power        = 0.0
         self.rated_voltage      = 0.0
+        self.kv_aux             = 0.0 
     
     def omega(self,conditions):
         """Calculates the motor's rotation rate

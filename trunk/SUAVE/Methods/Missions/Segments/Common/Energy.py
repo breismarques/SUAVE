@@ -76,7 +76,7 @@ def update_thrust(segment,state):
 
     # evaluate
     results   = energy_model.evaluate_thrust(state)
-    print "Current Segment is:" + segment.tag
+    #print "Current Segment is:" + segment.tag
 
     # pack conditions
     conditions = state.conditions
