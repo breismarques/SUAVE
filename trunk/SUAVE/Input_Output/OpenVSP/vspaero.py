@@ -398,6 +398,7 @@ def vspaero(vel_sound,tag,rho,AoA,MachNumber,NumberIterations, rpm_forward, rpm_
                     
                 elif math.isnan(lift_Ct)==True:
                     aux_ct_2=0.001
+                    print "LIFT CT IS NAN"
                     vspaero_settings_container_id = vsp.FindContainer( "VSPAEROSettings", 0 )
                     ct_id = vsp.FindParm( vspaero_settings_container_id, 'RotorCT', 'Rotor_'+str(g))
                     vsp.SetParmVal( ct_id, aux_ct_2)

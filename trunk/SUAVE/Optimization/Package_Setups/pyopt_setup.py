@@ -98,6 +98,7 @@ def Pyopt_Solve(problem,solver='SNOPT',FD='single', sense_step=1.0E-6,  nonderiv
    
     if solver == 'SNOPT':
         import pyOpt.pySNOPT
+        print(pyOpt.pySNOPT.__file__)
         opt = pyOpt.pySNOPT.SNOPT()
         CD_step = (sense_step**2.)**(1./3.)  #based on SNOPT Manual Recommendations
         opt.setOption('Function precision', sense_step**2.)

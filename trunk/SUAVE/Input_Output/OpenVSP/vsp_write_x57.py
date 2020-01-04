@@ -546,7 +546,7 @@ def vsp_write_x57(vehicle,tag):
         
         if n_engines_lift_2==7:
             
-            prop_dist=((mid_span-t_radius_forward-mid_fuselage_width-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2*1.0-1.0))*10.0
+            prop_dist=((mid_span-t_radius_forward-mid_fuselage_width-n_engines_lift_2*2.0*t_radius_lift)/(n_engines_lift_2*1.0-1.0))*4.0
                       
         else:
             
@@ -569,11 +569,11 @@ def vsp_write_x57(vehicle,tag):
             #   y_pos_lift=float(i)*prop_dist+t_radius_lift*float(i)
            #else:
            #    y_pos_lift=float(i)*prop_dist+t_radius_lift*float((i+1))
-           y_pos_lift_1=mid_fuselage_width+0.25*mid_fuselage_width    #prop_dist+t_radius_lift
+           y_pos_lift_1=mid_fuselage_width+0.4*mid_fuselage_width    #prop_dist+t_radius_lift
            y_pos_lift=y_pos_lift_1+(prop_dist+2.0*t_radius_lift)*float(i)
+           x_pos_lift=vehicle.wings.main_wing.origin[0]+y_pos_lift*math.tan(vehicle.wings.main_wing.sweeps.leading_edge*math.pi/180.0)-0.05*(vehicle.wings.main_wing.chords.root)
            
-           x_pos_lift=vehicle.wings.main_wing.origin[0]+y_pos_lift*math.tan(vehicle.wings.main_wing.sweeps.leading_edge*math.pi/180.0)-0.1*(vehicle.wings.main_wing.chords.root)
-           z_pos_lift=vehicle.wings.main_wing.origin[2]+y_pos_lift*math.tan(vehicle.wings.main_wing.dihedral*math.pi/180.0)
+           z_pos_lift=vehicle.wings.main_wing.origin[2]*0.8+y_pos_lift*math.tan(vehicle.wings.main_wing.dihedral*math.pi/180.0)
                
         
            vsp.SetParmVal(disk_id,"X_Rel_Location","XForm",x_pos_lift)
