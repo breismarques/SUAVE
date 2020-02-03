@@ -297,7 +297,8 @@ class Lift_Forward_Propulsor(Propulsor):
         
         # Calculate the thrust and mdot
         F_lift_total    = F_lift*num_lift * [np.cos(self.thrust_angle_lift),0,-np.sin(self.thrust_angle_lift)]    
-        F_forward_total = F_forward*num_forward * [np.cos(self.thrust_angle_forward),0,-np.sin(self.thrust_angle_forward)] 
+        F_forward_total = F_forward*num_forward * [np.cos(self.thrust_angle_forward),0,-np.sin(self.thrust_angle_forward)]
+        
        
         F_total = F_lift_total + F_forward_total
         mdot    = np.zeros_like(F_total)
