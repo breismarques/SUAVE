@@ -11,16 +11,14 @@
 import SUAVE
 import numpy as np
 
-from SUAVE.Core import (
-    Data, Container,
-    )
+from SUAVE.Core import Data
 
 # ----------------------------------------------------------------------
 #  Empty
 # ----------------------------------------------------------------------
 
 ## @ingroup Methods-Weights-Correlations-UAV
-def empty(vehicle):
+def empty(vehicle,settings=None):
     """ This comoutes the weigt of a UAV   
     
     Assumptions:

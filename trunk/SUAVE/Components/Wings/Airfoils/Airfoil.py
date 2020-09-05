@@ -3,6 +3,7 @@
 # 
 # Created:  
 # Modified: Sep 2016, E. Botero
+#           Mar 2020, M. Clarke
 
 # ----------------------------------------------------------------------
 #  Imports
@@ -39,6 +40,7 @@ class Airfoil(Lofted_Body.Section):
         self.tag                = 'Airfoil'
         self.thickness_to_chord = 0.0
         self.coordinate_file    = None    # absolute path
+<<<<<<< HEAD
         self.points             = [[],[]]
         
     
@@ -99,3 +101,7 @@ class Airfoil(Lofted_Body.Section):
         
         self.points = data['upper'] 
         
+=======
+        self.points             = []
+       
+>>>>>>> upstream/develop

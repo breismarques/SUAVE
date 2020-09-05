@@ -1,15 +1,14 @@
 ## @ingroup Attributes-Constants
 # Constant.py
 
-# Created:  Mar, 2014, SUAVE Team
-# Modified: Jan, 2016, M. Vegh
+# Created:  Mar 2014, SUAVE Team
+# Modified: Jan 2016, M. Vegh
 
 # ----------------------------------------------------------------------
 #  Imports
 # ----------------------------------------------------------------------
 
 from SUAVE.Core import Data
-from SUAVE.Core import Container as ContainerBase
 
 # ----------------------------------------------------------------------
 #  Constant Data Class
@@ -43,22 +42,3 @@ class Constant(Data):
         None
         """          
         pass
-
-class Container(ContainerBase):
-    """A subcontainer for constant values.
-    
-    Assumptions:
-    None
-    
-    Source:
-    None
-    """    
-    pass
-
-# ----------------------------------------------------------------------
-#  Handle Linking
-# ----------------------------------------------------------------------
-
-Constant.Container = Container    
-    
-    

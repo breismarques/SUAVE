@@ -2,7 +2,12 @@
 # Internal_Combustion_Propeller.py
 # 
 # Created:  Sep 2016, E. Botero
+<<<<<<< HEAD
 # Modified: 
+=======
+# Modified: Apr 2018, M. Clarke 
+#           Mar 2020, M. Clarke 
+>>>>>>> upstream/develop
 
 # ----------------------------------------------------------------------
 #  Imports
@@ -14,20 +19,56 @@ import SUAVE
 # package imports
 import numpy as np
 from SUAVE.Components.Propulsors.Propulsor import Propulsor
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/develop
 from SUAVE.Core import Data, Units
 
 # ----------------------------------------------------------------------
 #  Network
 # ----------------------------------------------------------------------
+<<<<<<< HEAD
 class Internal_Combustion_Propeller(Propulsor):
     def __defaults__(self): 
+=======
+## @ingroup Components-Energy-Networks
+class Internal_Combustion_Propeller(Propulsor):
+    """ A simple mock up of an internal combustion propeller engine. Tis network adds an extra
+        unknowns to the mission, the torque matching between motor and propeller.
+    
+        Assumptions:
+        None
+        
+        Source:
+        None
+    """      
+    def __defaults__(self):
+        """ This sets the default values for the network to function.
+    
+            Assumptions:
+            None
+    
+            Source:
+            N/A
+    
+            Inputs:
+            None
+    
+            Outputs:
+            None
+    
+            Properties Used:
+            N/A
+        """        
+>>>>>>> upstream/develop
         self.engine            = None
         self.propeller         = None
         self.engine_length     = None
         self.number_of_engines = None
         self.thrust_angle      = 0.0
         self.rated_speed       = 0.0
+<<<<<<< HEAD
         self.tag               = 'network'
         self.nacelle_diameter = None
         
@@ -41,12 +82,42 @@ class Internal_Combustion_Propeller(Propulsor):
     # manage process with a driver function
     def evaluate_thrust(self,state):
     
+=======
+    
+    # manage process with a driver function
+    def evaluate_thrust(self,state):
+        """ Calculate thrust given the current state of the vehicle
+    
+            Assumptions:
+    
+            Source:
+            N/A
+    
+            Inputs:
+            state [state()]
+    
+            Outputs:
+            results.thrust_force_vector [newtons]
+            results.vehicle_mass_rate   [kg/s]
+            conditions.propulsion:
+                rpm                  [radians/sec]
+                propeller_torque     [N-M]
+                power                [W]
+    
+            Properties Used:
+            Defaulted values
+        """           
+>>>>>>> upstream/develop
         # unpack
         conditions  = state.conditions
         numerics    = state.numerics
         engine      = self.engine
         propeller   = self.propeller
         rated_speed = self.rated_speed
+<<<<<<< HEAD
+=======
+        num_engines = self.number_of_engines
+>>>>>>> upstream/develop
         
         # Throttle the engine
         eta = conditions.propulsion.throttle[:,0,None]
@@ -61,15 +132,24 @@ class Internal_Combustion_Propeller(Propulsor):
         torque       = engine.outputs.torque     
         
         # link
+<<<<<<< HEAD
         propeller.inputs.omega =  engine.speed
         propeller.thrust_angle = self.thrust_angle
         # step 4
         F, Q, P, Cp = propeller.spin(conditions)
+=======
+        propeller.inputs.omega = engine.speed
+        propeller.thrust_angle = self.thrust_angle
+        
+        # step 4
+        F, Q, P, Cp ,  outputs  , etap  = propeller.spin(conditions)
+>>>>>>> upstream/develop
         
         # Check to see if magic thrust is needed, the ESC caps throttle at 1.1 already
         P[eta>1.0] = P[eta>1.0]*eta[eta>1.0]
         F[eta>1.0] = F[eta>1.0]*eta[eta>1.0]   
         
+<<<<<<< HEAD
         #print 'Delta Torque'
         #print Q - torque
     
@@ -82,6 +162,26 @@ class Internal_Combustion_Propeller(Propulsor):
         
         # Create the outputs
         F    = self.number_of_engines * F * [np.cos(self.thrust_angle),0,-np.sin(self.thrust_angle)]      
+=======
+        # link
+        propeller.outputs = outputs
+    
+        # Pack the conditions for outputs
+        a                                        = conditions.freestream.speed_of_sound
+        R                                        = propeller.tip_radius   
+        rpm                                      = engine.speed / Units.rpm
+          
+        conditions.propulsion.rpm                = rpm
+        conditions.propulsion.propeller_torque   = Q
+        conditions.propulsion.power              = P
+        conditions.propulsion.propeller_tip_mach = (R*rpm*Units.rpm)/a
+        
+        # Create the outputs
+        F                                        = num_engines* F * [np.cos(self.thrust_angle),0,-np.sin(self.thrust_angle)]  
+        F_mag                                    = np.atleast_2d(np.linalg.norm(F, axis=1))   
+        conditions.propulsion.disc_loading       = (F_mag.T)/ (num_engines*np.pi*(R/Units.feet)**2)   # N/m^2                      
+        conditions.propulsion.power_loading      = (F_mag.T)/(P)    # N/W       
+>>>>>>> upstream/develop
         
         results = Data()
         results.thrust_force_vector = F
@@ -91,7 +191,27 @@ class Internal_Combustion_Propeller(Propulsor):
     
     
     def unpack_unknowns(self,segment,state):
+<<<<<<< HEAD
         """"""        
+=======
+        """Unpacks the unknowns set in the mission to be available for the mission.
+
+        Assumptions:
+        N/A
+        
+        Source:
+        N/A
+        
+        Inputs:
+        state.conditions.propulsion.propeller_power_coefficient    [Unitless] 
+        
+        Outputs:
+        state.unknowns.propeller_power_coefficient                 [Unitless] 
+        
+        Properties Used:
+        N/A
+        """            
+>>>>>>> upstream/develop
         
         # Here we are going to unpack the unknowns (Cp) provided for this network
         state.conditions.propulsion.propeller_power_coefficient = state.unknowns.propeller_power_coefficient
@@ -99,8 +219,29 @@ class Internal_Combustion_Propeller(Propulsor):
         return
     
     def residuals(self,segment,state):
+<<<<<<< HEAD
         """"""        
         
+=======
+        """ Calculates a residual based on torques 
+        
+        Assumptions:
+        
+        Inputs:
+            segment.state.conditions.propulsion.
+                motor_torque                       [newtom-meters]                 
+                propeller_torque                   [newtom-meters] 
+        
+        Outputs:
+            segment.state:
+                residuals.network                  [newtom-meters] 
+                
+        Properties Used:
+            N/A
+                                
+        """         
+            
+>>>>>>> upstream/develop
         # Here we are going to pack the residuals (torque,voltage) from the network
         
         # Unpack
@@ -112,4 +253,8 @@ class Internal_Combustion_Propeller(Propulsor):
         
         return    
             
+<<<<<<< HEAD
     __call__ = evaluate_thrust
+=======
+    __call__ = evaluate_thrust
+>>>>>>> upstream/develop

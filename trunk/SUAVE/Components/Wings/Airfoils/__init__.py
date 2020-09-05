@@ -5,8 +5,10 @@
 # 
 # Created:  
 # Modified: Feb 2016, T. MacDonald
+# Modified: Feb 2020, M. Clarke
 
 # classes
+<<<<<<< HEAD
 from Airfoil import Airfoil
 
 # functions
@@ -26,3 +28,6 @@ _airfoils = load_airfoils_2D(__dir__)
 for k,v in _airfoils.items():
     exec('%s = v'%k)
 #del os, _airfoils, k, v
+=======
+from .Airfoil import Airfoil 
+>>>>>>> upstream/develop
